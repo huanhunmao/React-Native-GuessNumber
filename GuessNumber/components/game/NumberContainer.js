@@ -20,7 +20,10 @@ const styles = StyleSheet.create({
         alignItems:'center',
     },
     numberText:{
+        fontFamily:'open-sans-bold',
         color: Color.accent500,
+        fontSize:36,
+        // fontWeight: 'bold',
     }
 })
 

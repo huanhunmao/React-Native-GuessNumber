@@ -5,6 +5,7 @@ import NumberContainer from "../components/game/NumberContainer"
 import PrimaryButton from "../components/ui/PrimaryButton";
 import InstructionText from "../components/ui/InstructionText";
 import Card from "../components/ui/Card";
+import Ionicons from '@expo/vector-icons/Ionicons';
 
 let minBoundary = 1
 let maxBoundary = 100
@@ -59,10 +60,20 @@ function GameScreen({userNumber, onGameOver}){
         <Title>Opponent's Guess</Title>
         <NumberContainer>{currentGuess}</NumberContainer>
         <Card>
-            <InstructionText>Higher or lower?</InstructionText>
-            <View>
-            <PrimaryButton onPress={nextGuessHandler.bind(this, 'lower')}>-</PrimaryButton>
-            <PrimaryButton onPress={nextGuessHandler.bind(this, 'greater')}>+</PrimaryButton>
+            <InstructionText style={styles.instructionText}>
+                Higher or lower?
+            </InstructionText>
+            <View style={styles.buttonsContainer}>
+                <View style={styles.buttonContainer}>
+                <PrimaryButton onPress={nextGuessHandler.bind(this, 'lower')}>
+                    <Ionicons name="md-remove" size={24} color="white"/>
+                </PrimaryButton>
+                </View>
+                <View  style={styles.buttonContainer}>
+                <PrimaryButton onPress={nextGuessHandler.bind(this, 'greater')}>
+                <Ionicons name="md-add" size={24} color="white"/>
+                </PrimaryButton>
+                </View>
             </View>
         </Card>
     </View>
@@ -74,5 +85,14 @@ const styles = StyleSheet.create({
     container:{
         flex: 1,
         padding: 24,
+    },
+    instructionText:{
+        marginBottom: 12,
+    },
+    buttonsContainer:{
+        flexDirection:'row'
+    },
+    buttonContainer: {
+        flex:1
     }
 })
