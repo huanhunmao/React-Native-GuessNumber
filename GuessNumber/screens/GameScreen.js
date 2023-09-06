@@ -6,6 +6,7 @@ import PrimaryButton from "../components/ui/PrimaryButton";
 import InstructionText from "../components/ui/InstructionText";
 import Card from "../components/ui/Card";
 import Ionicons from '@expo/vector-icons/Ionicons';
+import GuessLogItem from "../components/game/GuessLogItem";
 
 let minBoundary = 1
 let maxBoundary = 100
@@ -27,7 +28,7 @@ function GameScreen({userNumber, onGameOver}){
 
     useEffect(() => {
         if(currentGuess === userNumber){
-            onGameOver()
+            onGameOver(guessRounds.length)
         }
     },[currentGuess, userNumber,onGameOver])
 
@@ -60,8 +61,10 @@ function GameScreen({userNumber, onGameOver}){
         const newNumber = generateRandomBetweenMaxAndMin(minBoundary, maxBoundary, currentGuess)
 
         setCurrentGuess(newNumber)
-        setGuessRounds(prevValue => [...prevValue, newNumber])
+        setGuessRounds(prevValue => [newNumber, ...prevValue ])
      }
+
+     const guessRoundListLength = guessRounds.length
 
     return <View style={styles.container}>
         <Title>Opponent's Guess</Title>
@@ -83,15 +86,16 @@ function GameScreen({userNumber, onGameOver}){
                 </View>
             </View>
         </Card>
+        <View style={styles.listContainer}>
         <FlatList
             data = {guessRounds}
             renderItem = {
-                ({item}) => <View>
-                    <Text>{item}</Text>
-                </View>
+                ({item, index}) => <GuessLogItem roundNumber={guessRoundListLength - index } guess={item}>
+                </GuessLogItem>
             }
             keyExtractor={item => item}
             />
+        </View>
     </View>
 }
 
@@ -110,5 +114,9 @@ const styles = StyleSheet.create({
     },
     buttonContainer: {
         flex:1
+    },
+    listContainer: {
+        flex:1,
+        padding: 16
     }
 })
